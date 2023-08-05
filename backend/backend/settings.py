@@ -1,16 +1,13 @@
 from pathlib import Path
-import sentry_sdk
-
-from sentry_sdk.integrations.django import DjangoIntegration
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 SECRET_KEY = 'django-insecure-j_89af+30&&4qm*8z9_(^zz8p4-ho8z_m6ylm0s$h!-p@on1_^'
 
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['51.250.29.3', '127.0.0.1', 'localhost', 'black-taskmaster.hopto.org',]
+ALLOWED_HOSTS = ['51.250.29.3', '127.0.0.1', 'localhost', 'blacky-taskmaster.hopto.org',]
 
 
 # Application definition
@@ -57,17 +54,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'backend.wsgi.application'
-
-sentry_sdk.init(
-
-    dsn="https://62dda26bb47ef76f744ea5a72d4979fb@o4505636628791296.ingest.sentry.io/4505636631150592",
-    integrations=[
-        DjangoIntegration(),],
-
-    traces_sample_rate=1.0,
-
-    send_default_pii=True
-)
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -118,6 +104,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = BASE_DIR / 'static_backend'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -126,3 +113,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000'
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
